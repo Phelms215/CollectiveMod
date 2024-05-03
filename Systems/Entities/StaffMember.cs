@@ -270,14 +270,9 @@ public class StaffMember : MonoBehaviour
         var rack = GetStoreInventory().FindItemInventory(_restockerTask.ProductId);
         if (rack.Count == 0)
         {
-            if (_taskTimeOut != null && _taskTimeOut.HoursSince(Collective.GetNormalizedTime()) >= 1)
-            { 
-                return;
-            }
-            _taskTimeOut = Collective.GetNormalizedTime();
+            MarkTaskDone();
             return;
         }
-
 
         _restockerTask.TargetRackSlot = rack.First().RackSlot;
         _customer.StartCoroutine(Travel(_restockerTask.TargetRackSlot.InteractionPosition, EmployeeAtTargetRackSlot));
