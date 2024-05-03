@@ -1,0 +1,59 @@
+﻿# ===================================== #
+# Visual Studio / Rider / MonoDevelop   #
+# ===================================== # 
+bin/
+obj/
+.idea/
+.vs/
+.vscode/
+*.user
+*.userprefs
+*.suo
+*.sln.docstates
+*.sln.ide/
+
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store
+._*
+Thumbs.db 
+ 
+
+# ========== #
+# Other      #
+# ========== #
+# Ignore any other directories where you output your builds locally
+Output/
+[Oo]ut/
+
+# ============================== #
+# Common files to exclude        #
+# ============================== #
+*.log
+*.tar*
+*.tmp
+*.tmp_proj
+*.svd
+*.pidb
+*.pdb
+*.opendb
+*.db
+*.MDMP
+*.swp
+*.lock
+*.bak
+*.backup
+*.tlog
+*.vsix
+*.vsixmanifest
+*.vsdisco
+*.dyn
+*.dyn_session
+*.ilk
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
