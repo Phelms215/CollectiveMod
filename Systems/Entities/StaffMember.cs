@@ -58,11 +58,8 @@ public class StaffMember : MonoBehaviour
         if (spawningTransform == null) throw new Exception("No spawning transform found");
         var newRotation = spawningTransform.rotation * additionalRotation;
         _customer = LeanPool.Spawn<Customer>(customerPrefabs, spawningTransform.position, newRotation);
-        if (!_customer.gameObject.HasComponent<NavMeshAgent>())
-            _customer.gameObject.AddComponent<NavMeshAgent>();
-
         _navMeshAgent = _customer.gameObject.GetComponent<NavMeshAgent>();
-
+ 
         _nameTagObject = new GameObject("Collective-StaffNameTag" + employee.Guid);
         _nameTag = _nameTagObject.AddComponent<TextMeshPro>();
         _nameTag.text = _employee.Name;
@@ -326,18 +323,19 @@ public class StaffMember : MonoBehaviour
         // Ensure the agent is active
         _navMeshAgent.enabled = true;
         _navMeshAgent.SetDestination(destination);
-
+         
         // Wait for the path to become valid
-        yield return new WaitWhile(() => _navMeshAgent.pathPending);
-
+        yield return new WaitWhile(() => _navMeshAgent.pathPending); 
+        
         // Check if the agent has a path and it's not already complete
-        if (_navMeshAgent.hasPath && _navMeshAgent.remainingDistance > _navMeshAgent.stoppingDistance)
+        if (_navMeshAgent.enabled && _navMeshAgent.hasPath && _navMeshAgent.remainingDistance > _navMeshAgent.stoppingDistance)
         {
             // Wait until the agent reaches the destination
             yield return new WaitUntil(() => _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance);
         }
         else
         {
+            _navMeshAgent.enabled = true;
             // If the remaining distance is already within the stopping distance
             // We force a small wait to ensure it's not a false positive from a very close new destination
             yield return new WaitForSeconds(1f);
@@ -377,9 +375,15 @@ public class StaffMember : MonoBehaviour
  
     private void AdjustEmployeeRotation()
     {
-        if (!(_navMeshAgent.velocity.magnitude > 0.1f)) return; // Check if the agent is moving
-        var lookRotation = Quaternion.LookRotation(_navMeshAgent.velocity.normalized);
-        _customer.transform.rotation = Quaternion.Slerp(_customer.transform.rotation, lookRotation, Time.deltaTime * 5);
+        // Ensure that all necessary objects are instantiated before using them
+        if (_navMeshAgent == null || _customer == null || _customer.transform == null) return;
+
+        // Check if the agent is moving
+        if (_navMeshAgent.velocity.magnitude > 0.1f) 
+        {
+            var lookRotation = Quaternion.LookRotation(_navMeshAgent.velocity.normalized);
+            _customer.transform.rotation = Quaternion.Slerp(_customer.transform.rotation, lookRotation, Time.deltaTime * 5);
+        }
     }
 
 

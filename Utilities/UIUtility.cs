@@ -1,16 +1,19 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Reflection;
 using BepInEx;
 using MyBox;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace Collective.Utilities;
 
 public static class UIUtility
 {
-    public static readonly AssetBundle UIAssetBundle =
-        AssetBundle.LoadFromFile(Path.Combine(Paths.PluginPath, "collective.bundle"));
+    public static readonly AssetBundle UIAssetBundle = AssetBundle.LoadFromFile(
+        Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new InvalidOperationException(), "collective.bundle"));
 
     public static GameObject TabsObject()
     {
