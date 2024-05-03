@@ -93,18 +93,10 @@ public class StaffMember : MonoBehaviour
 
     public void ReloadTask()
     { 
-        _customer.transform.position = _employee.GamePosition();
-        if (_employee.JobRole == JobRole.Cashier)
-        {
-            var getNextCheckout = FindObjectsByType<Checkout>(FindObjectsSortMode.None).First(x => x.HasCashier);
-            if (getNextCheckout == null)
-                _customer.transform.position = _startPosition;
-            else
-                getNextCheckout.AddCashier(_cashier);
-        }
-
-
+        _customer.transform.position = _startPosition;
+        _atTask = false;
         _doneMoving = true;
+        
     }
 
     public void ShouldGoHome()
@@ -199,6 +191,18 @@ public class StaffMember : MonoBehaviour
         if (_shiftOver)
         {
             if (_restockerTask != null) return;
+            
+            // Drop the box off before leaving.
+            if (m_Box.HasProducts)
+            {
+                ReturnProductToStorage();
+                return;
+            }
+            
+            if (m_Box != null && !m_Box.HasProducts)
+                DeleteBox(); 
+            
+            // Go home.
             _customer.StartCoroutine(Travel(CustomerGenerator.Instance.SpawningTransforms.GetRandom().transform.position, EndShift));
             return;
         }
