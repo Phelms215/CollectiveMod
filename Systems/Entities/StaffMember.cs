@@ -93,18 +93,10 @@ public class StaffMember : MonoBehaviour
 
     public void ReloadTask()
     { 
-        _customer.transform.position = _employee.GamePosition();
-        if (_employee.JobRole == JobRole.Cashier)
-        {
-            var getNextCheckout = FindObjectsByType<Checkout>(FindObjectsSortMode.None).First(x => x.HasCashier);
-            if (getNextCheckout == null)
-                _customer.transform.position = _startPosition;
-            else
-                getNextCheckout.AddCashier(_cashier);
-        }
-
-
+        _customer.transform.position = _startPosition;
+        _atTask = false;
         _doneMoving = true;
+        
     }
 
     public void ShouldGoHome()
