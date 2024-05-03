@@ -193,12 +193,13 @@ public class StaffMember : MonoBehaviour
             if (_restockerTask != null) return;
             
             // Drop the box off before leaving.
-            if (m_Box.HasProducts)
-            {
+            if (m_Box != null && m_Box.HasProducts)
+            { 
                 ReturnProductToStorage();
                 return;
             }
             
+            // If the box 
             if (m_Box != null && !m_Box.HasProducts)
                 DeleteBox(); 
             
