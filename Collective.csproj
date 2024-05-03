@@ -45,10 +45,10 @@
       <HintPath>$(GameFolderPath)\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Supermarket Simulator\Supermarket Simulator_Data\Managed\DOTween.dll</HintPath>
+      <HintPath>$(GameFolderPath)\DOTween.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenPro">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Supermarket Simulator\Supermarket Simulator_Data\Managed\DOTweenPro.dll</HintPath>
+      <HintPath>$(GameFolderPath)\DOTweenPro.dll</HintPath>
     </Reference>
     <Reference Include="LeanPool">
       <HintPath>$(GameFolderPath)\LeanPool.dll</HintPath>
