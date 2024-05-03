@@ -241,8 +241,9 @@ public class StaffMember : MonoBehaviour
 
     private void ReturnProductToStorage()
     {
-        
-        var rackWithSpace = GetStoreInventory().GetRackSlotsWithSpace(_restockerTask.ProductId).FirstOrDefault();
+        if (m_Box == null) return;
+        var productId = m_Box.Product.ID;
+        var rackWithSpace = GetStoreInventory().GetRackSlotsWithSpace(productId).FirstOrDefault();
         if (rackWithSpace == null)
             rackWithSpace = GetStoreInventory().GetEmptyRackSlot();
             
